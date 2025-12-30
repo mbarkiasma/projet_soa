@@ -110,7 +110,7 @@ http://localhost:8080/nom-du-projet/api/persons
 ### Étape 3 : Frontend
 
 1. Accéder au dossier frontend :
-cd frontend
+cd parson-frontend
 
 2. Installer les dépendances :
 npm install
