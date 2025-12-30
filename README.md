@@ -1,185 +1,125 @@
-🧑‍💻 Projet SOA – Gestion des Personnes
-📌 Présentation du projet
+# 🧑‍💻 Projet SOA – Gestion des Personnes
 
-Ce projet est une application web de gestion des personnes.
-L’objectif principal est de consommer des services REST développés en Java afin de gérer des personnes, notamment :
+## 📌 Description du projet
 
-l’ajout
+Ce projet est une application web de gestion des personnes développée dans le cadre du module SOA (Service-Oriented Architecture).
+L’objectif principal est de consommer des services REST développés en Java afin de gérer des personnes via les fonctionnalités suivantes :
 
-la modification
+- Ajouter une personne
+- Modifier une personne
+- Supprimer une personne
+- Afficher la liste des personnes
+- Rechercher une personne par nom ou par identifiant
 
-la suppression
+L’application repose sur une architecture client / serveur avec une séparation claire entre le frontend, le backend et la base de données.
 
-l’affichage des données
+---
 
-🏗️ Architecture du projet
+## 🛠️ Technologies utilisées
 
-Ce projet est composé de trois parties principales :
+### Frontend
+- React
+- JavaScript
+- HTML5
+- CSS3
+- Bootstrap
+- Fetch API
 
-Frontend : React, HTML, CSS, JavaScript et Bootstrap
+### Backend
+- Java
+- JAX-RS (Jersey)
+- Hibernate / JPA
+- Maven
 
-Backend : Java avec JAX-RS (Jersey)
+### Base de données
+- MySQL
+- Nom de la base de données : person_db
 
-Base de données : MySQL
+---
 
-Cette architecture permet une séparation claire des responsabilités entre l’interface utilisateur, la logique métier et la base de données.
+## 🏗️ Architecture du projet
 
-⚙️ Backend – Java (JAX-RS / Jersey)
+Le projet est divisé en trois couches principales :
 
-Le backend représente la partie serveur de l’application.
-Il est organisé en plusieurs packages Java, afin de respecter une architecture en couches, ce qui rend le projet plus clair, structuré et maintenable.
+- Frontend : interface utilisateur développée avec React
+- Backend : services REST développés en Java (JAX-RS)
+- Base de données : stockage des données avec MySQL
 
-📦 Package com.person.config
+### Organisation du Backend
 
-Ce package contient la configuration générale du backend.
-Il inclut notamment un filtre CORS, qui permet au frontend React de communiquer avec le backend même si les deux applications utilisent des ports différents.
+- Package com.person.config  
+  Contient la configuration générale du backend et le filtre CORS.
 
-📦 Package com.person.model
+- Package com.person.model  
+  Contient les entités du projet.  
+  La classe Person représente la table person avec les attributs :
+  nom, email, âge, téléphone.
 
-Le package model contient les entités du projet.
-La classe Person représente la table person dans la base de données.
+- Package com.person.dao  
+  Responsable de l’accès à la base de données.  
+  Opérations CRUD :
+  - findAll
+  - findById
+  - findByName
+  - save
+  - update
+  - delete
 
-Elle définit les attributs principaux :
+- Package com.person.service  
+  Contient la logique métier et sert d’intermédiaire entre le DAO et les services REST.
 
-nom
+- Package com.person.router  
+  Contient les services REST exposés.
+  URL de base : /persons  
+  Consomme et produit des données au format JSON.
 
-email
+---
 
-âge
+## ⚙️ Instructions pour exécuter le projet
 
-téléphone
+### Prérequis
+- Java JDK 8 ou plus
+- Maven
+- MySQL
+- Node.js et npm
+- Apache Tomcat
 
-📦 Package com.person.dao
+---
 
-Le package DAO (Data Access Object) est responsable de l’accès à la base de données.
-Il contient toutes les opérations CRUD :
+### Étape 1 : Base de données
 
-findAll : récupérer toutes les personnes stockées dans la base de données
+Créer la base de données MySQL :
 
-findById : récupérer une personne à partir de son identifiant
+CREATE DATABASE person_db;
 
-findByName : rechercher des personnes par leur nom
+Vérifier la configuration de connexion dans le fichier persistence.xml.
 
-save : enregistrer une nouvelle personne
+---
 
-update : modifier une personne existante
+### Étape 2 : Backend
 
-delete : supprimer une personne à partir de son ID
+1. Importer le projet backend dans un IDE (Eclipse ou IntelliJ).
+2. Vérifier la configuration du fichier web.xml.
+3. Déployer le projet sur Apache Tomcat.
+4. Tester l’API REST via un navigateur ou Postman :
 
-📦 Package com.person.service
+http://localhost:8080/nom-du-projet/api/persons
 
-Ce package joue le rôle d’un intermédiaire entre le contrôleur REST et le DAO.
-Il contient la logique métier de l’application et permet de mieux organiser le code.
+---
 
-📦 Package com.person.router
+### Étape 3 : Frontend
 
-Ce package contient les services REST.
-Il expose plusieurs endpoints HTTP permettant au frontend de communiquer avec le backend via des requêtes JSON.
+1. Accéder au dossier frontend :
+cd frontend
 
-Annotations principales :
+2. Installer les dépendances :
+npm install
 
-@Path("/persons") : définit l’URL de base de l’API
+3. Lancer l’application React :
+npm start
 
-@Consumes(MediaType.APPLICATION_JSON) : le backend reçoit des données JSON
+4. Accéder à l’application :
+http://localhost:3000
 
-@Produces(MediaType.APPLICATION_JSON) : le backend renvoie des données JSON
 
-Fonctionnalités :
 
-récupérer toutes les personnes
-
-récupérer une personne par ID
-
-rechercher une personne par nom
-
-ajouter une personne
-
-modifier une personne
-
-supprimer une personne
-
-🗄️ Base de données
-
-La base de données utilisée dans ce projet est MySQL.
-
-- Nom de la base de données : `person_db`
-- SGBD : MySQL
-- ORM utilisé : Hibernate (via JPA)
-
-La connexion entre l’application Java et la base de données est configurée dans le fichier `persistence.xml`.  
-Hibernate permet de gérer automatiquement les entités Java et de synchroniser la structure de la base de données avec les classes du projet.
-
-
-🌐 Configuration Web
-
-Le fichier web.xml est le fichier principal de configuration de l’application web.
-Il permet :
-
-de déclarer le servlet Jersey
-
-de définir le mapping des services REST
-
-d’activer le filtre CORS
-
-Le filtre CORS autorise la communication entre le frontend React et le backend Java.
-
-🎨 Frontend – React
-
-Le frontend est développé avec React et permet à l’utilisateur d’interagir avec le backend REST.
-
-🔹 Gestion des états
-
-Deux états principaux sont utilisés :
-
-persons : contient la liste des personnes récupérées depuis le backend
-
-form : contient les données du formulaire pour l’ajout ou la modification
-
-🔹 Chargement des données
-
-Une requête GET est envoyée au backend afin de récupérer toutes les personnes et les afficher dans un tableau.
-
-🔹 Communication avec le backend (Fetch API)
-
-La communication entre le frontend React et le backend Java REST se fait à l’aide de Fetch API.
-Fetch permet d’envoyer des requêtes HTTP vers les services REST et de récupérer les réponses au format JSON.
-
-Les méthodes HTTP utilisées sont :
-
-GET : pour récupérer la liste des personnes
-
-POST : pour ajouter une nouvelle personne
-
-PUT : pour modifier une personne existante
-
-DELETE : pour supprimer une personne
-
-🔹 Formulaire
-
-Le formulaire permet d’ajouter ou de modifier une personne.
-Les champs sont liés à l’état React et sont mis à jour automatiquement lors de la saisie.
-
-🔹 Ajout et modification
-
-Lors de la soumission du formulaire :
-
-une requête POST est utilisée pour l’ajout
-
-une requête PUT est utilisée pour la modification
-
-Les données sont envoyées au backend au format JSON.
-
-🔹 Suppression
-
-Chaque personne peut être supprimée via un bouton.
-Une confirmation est demandée avant l’envoi de la requête DELETE vers le backend.
-
-🎨 Interface utilisateur
-
-L’interface utilisateur est réalisée avec Bootstrap, ce qui permet :
-
-un design simple et clair
-
-une interface responsive
-
-une meilleure organisation des formulaires et tableaux.
